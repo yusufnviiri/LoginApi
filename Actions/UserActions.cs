@@ -90,9 +90,9 @@
             await _db.PasswordChanges.AddAsync(change);
             await _db.SaveChangesAsync();
             var user = await GetUser(User,_db);
-            AuditTrail.User = user;
-            AuditTrail.Reason = "Change Password";
-            user.Password = change.NewPassword;
+           
+            await AddAuditTrail(_db, user);
+             user.Password = change.NewPassword;
             await _db.SaveChangesAsync();
 
         }
